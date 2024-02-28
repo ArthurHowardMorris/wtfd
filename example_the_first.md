@@ -27,8 +27,11 @@ alias wtfd='ag "TODO: ">todo.txt;bat todo.txt'
 ```
 
 this takes advantage of your directory structure to track todos in the  place where you'll use them.
+
+There is a slightly more clever bash script which offers you a list of todo items
 and allows you to just jump directly to them (if your editor is vim or neovim or vscode)
-vim and nvim are `nvim file +line_number` and vscode is `code file:line_number`
+vim and nvim are `nvim file +line_number` and vscode is `code file:line_number`. when you 
+exit the editor it takes you back to the shell and gives you the list back.
 
 note that this could be configured to integrate with https://github.com/Swatto/td and https://mjdescy.github.io/TodoTxtMac/ and https://nerdur.com/todour-pl/ and really any similar system (though I'll have to make it work a little more)
 

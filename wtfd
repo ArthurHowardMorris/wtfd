@@ -1,37 +1,72 @@
 #!/bin/bash 
 # search for the TODO tag recursively in the current directory
+install_depends () {
+	if ! command -v gum &> /dev/null 
+	then 
+		echo "wtfd uses gum installing" # TODO: give choice 
+		brew install gum 
+	fi 
+	
+	if ! command -v gum &>/dev/null && ! command -v rg &>/dev/null && ! command -v grep &>/dev/null 
+	then
+		echo "need a grep equivalent installing" # TODO: give choice 
+		brew install rg 
+	fi
+}
+install_depends
 
-if ! command -v gum &> /dev/null
-then 
-	echo "wtfd requires gum install with"
-	echo "brew install gum"
-fi 
+gather_todos () {
+	if command -v rg &> /dev/null 
+	then 
+		rg -n "TODO: " > todo.txt # TODO: change to ripgrep or add option
+	elif command -v rg &> /dev/null
+	then 
+		ag "TODO: " > todo.txt
+	elif command -v grep &> /dev/null 
+	then 
+		grep -nr "TODO: " . > todo.txt
+	else
+		install_depends
+	fi
+	TASKS=$(cat todo.txt | wc -l)
+}
+gather_todos
 
-if command -v ag &> /dev/null 
-then 
-	ag "TODO: " > todo.txt
-elif command -v grep &> /dev/null 
-then 
-	grep -nr "TODO: " . > todo.txt
-else
-	echo "ag or grep required (ag recommended)"
-	echo "install with 'brew install ag'"
-	exit 1
-fi
+while [ $TASKS > 0 ]
+do 
+	RESULT=$(cat todo.txt | gum filter) 
+	if [ $? = 130 ]; then 
+		gum style \
+		--foreground 212 --border-foreground 212 --border double \
+		--align center --width 50 --margin "1 2" --padding "2 4" \
+		"todo.txt saved with" "$TASKS tasks open"
+		exit 0
+	fi
+	OPENTHIS="$(pwd)/" 
+	OPENTHIS+=$(echo "$RESULT" | cut -d ":" -f 1)
+	OPENHERE=$(echo "$RESULT" | cut -d ":" -f 2)
+	if [ "$EDITOR" = "nvim" ] || [ "$EDITOR" = "vim" ]; then 
+		$EDITOR $OPENTHIS +$OPENHERE 
+	elif [ "$EDITOR" = "code" ]; then 
+		$EDITOR $(OPENTHIS):$OPENHERE 
+	else 
+		echo "editor not supported"
+		bat todo.txt 
+		exit 1
+	fi
+	gather_todos
+done 
 
-RESULT=$(cat todo.txt | gum filter) # TODO: allow this to be configured to .todo as well
+# exit message 
+gum style \
+		--foreground 212 --border-foreground 212 --border double \
+		--align center --width 50 --margin "1 2" --padding "2 4" \
+		"TASKS COMPLETED" 
+		exit 0
+
+# NB: popping these for now 
+# TODO: develop one mode that brings you back to the selector when you're done working in the editor
+# TODO: and another mode that just makes the final list (i.e. the way the todo alias works now).
+# TODO: allow this to be configured to .todo 
 # TODO: find a way to allow numeric selection rather than forcing use of arrow keys
 
-OPENTHIS="$(pwd)/" 
-OPENTHIS+=$(echo "$RESULT" | cut -d ":" -f 1)
-OPENHERE=$(echo "$RESULT" | cut -d ":" -f 2)
-
-if [ "$EDITOR" = "nvim" ] || [ "$EDITOR" = "vim" ]; then 
-	$EDITOR $OPENTHIS +$OPENHERE 
-elif [ "$EDITOR" = "code" ]; then # TODO: confirm that this is correct and explore other options
-	$EDITOR $(OPENTHIS):$OPENHERE 
-else 
-	echo "editor not supported"
-fi 
-
-# TODO: develop one mode that brings you back to the selector when you're done working in nvim and another mode that just makes the final list (i.e. the way the todo alias works now).
