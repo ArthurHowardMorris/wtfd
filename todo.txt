@@ -1,0 +1,9 @@
+wtfd.sh:12:	ag "TODO: " > todo.txt
+wtfd.sh:15:	grep -nr "TODO: " . > todo.txt
+wtfd.sh:22:RESULT=$(cat todo.txt | gum filter) # TODO: allow this to be configured to .todo as well
+wtfd.sh:23:# TODO: find a way to allow numeric selection rather than forcing use of arrow keys
+wtfd.sh:31:elif [ "$EDITOR" = "code" ]; then # TODO: confirm that this is correct and explore other options
+wtfd.sh:37:# TODO: develop one mode that brings you back to the selector when you're done working in nvim and another mode that just makes the final list (i.e. the way the todo alias works now).
+example_the_first.md:15:<!-- TODO: explain what this means -->
+example_the_first.md:17:<!-- TODO: explain what this means  -->
+example_the_first.md:30:ag "TODO: ">todo.txt;bat todo.txt

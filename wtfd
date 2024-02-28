@@ -1,0 +1,37 @@
+#!/bin/bash 
+# search for the TODO tag recursively in the current directory
+
+if ! command -v gum &> /dev/null
+then 
+	echo "wtfd requires gum install with"
+	echo "brew install gum"
+fi 
+
+if command -v ag &> /dev/null 
+then 
+	ag "TODO: " > todo.txt
+elif command -v grep &> /dev/null 
+then 
+	grep -nr "TODO: " . > todo.txt
+else
+	echo "ag or grep required (ag recommended)"
+	echo "install with 'brew install ag'"
+	exit 1
+fi
+
+RESULT=$(cat todo.txt | gum filter) # TODO: allow this to be configured to .todo as well
+# TODO: find a way to allow numeric selection rather than forcing use of arrow keys
+
+OPENTHIS="$(pwd)/" 
+OPENTHIS+=$(echo "$RESULT" | cut -d ":" -f 1)
+OPENHERE=$(echo "$RESULT" | cut -d ":" -f 2)
+
+if [ "$EDITOR" = "nvim" ] || [ "$EDITOR" = "vim" ]; then 
+	$EDITOR $OPENTHIS +$OPENHERE 
+elif [ "$EDITOR" = "code" ]; then # TODO: confirm that this is correct and explore other options
+	$EDITOR $(OPENTHIS):$OPENHERE 
+else 
+	echo "editor not supported"
+fi 
+
+# TODO: develop one mode that brings you back to the selector when you're done working in nvim and another mode that just makes the final list (i.e. the way the todo alias works now).
