@@ -7,10 +7,10 @@ wtfd:12:		echo "need a grep equivalent installing" # TODO: give choice
 wtfd:21:		rg -n "TODO: " > todo.txt # TODO: change to ripgrep or add option
 wtfd:24:		ag "TODO: " > todo.txt
 wtfd:27:		grep -nr "TODO: " . > todo.txt
-wtfd:68:# TODO: develop one mode that brings you back to the selector when you're done working in the editor
-wtfd:69:# TODO: and another mode that just makes the final list (i.e. the way the todo alias works now).
-wtfd:70:# TODO: allow this to be configured to .todo 
-wtfd:71:# TODO: find a way to allow numeric selection rather than forcing use of arrow keys
+wtfd:67:# TODO: develop one mode that brings you back to the selector when you're done working in the editor
+wtfd:68:# TODO: and another mode that just makes the final list (i.e. the way the todo alias works now).
+wtfd:69:# TODO: allow this to be configured to .todo 
+wtfd:70:# TODO: find a way to allow numeric selection rather than forcing use of arrow keys
 example_the_first.md:4:<!-- TODO: include this -->
 example_the_first.md:16:<!-- TODO: explain what this means -->
 example_the_first.md:18:<!-- TODO: explain what this means  -->

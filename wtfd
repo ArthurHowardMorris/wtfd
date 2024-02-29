@@ -32,7 +32,7 @@ gather_todos () {
 }
 gather_todos
 
-while [ $TASKS > 0 ]
+while [ $TASKS -gt 0 ]
 do 
 	RESULT=$(cat todo.txt | gum filter) 
 	if [ $? = 130 ]; then 
@@ -40,7 +40,7 @@ do
 		--foreground 212 --border-foreground 212 --border double \
 		--align center --width 50 --margin "1 2" --padding "2 4" \
 		"todo.txt saved with" "$TASKS tasks open"
-		exit 0
+		exit 1
 	fi
 	OPENTHIS="$(pwd)/" 
 	OPENTHIS+=$(echo "$RESULT" | cut -d ":" -f 1)
@@ -62,7 +62,6 @@ gum style \
 		--foreground 212 --border-foreground 212 --border double \
 		--align center --width 50 --margin "1 2" --padding "2 4" \
 		"TASKS COMPLETED" 
-		exit 0
 
 # NB: popping these for now 
 # TODO: develop one mode that brings you back to the selector when you're done working in the editor
