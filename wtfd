@@ -18,7 +18,7 @@ install_depends
 gather_todos () {
 	if command -v rg &> /dev/null 
 	then 
-		rg -n "TODO: " > todo.txt # TODO: change to ripgrep or add option
+		rg -n "TODO: " > todo.txt 
 	elif command -v rg &> /dev/null
 	then 
 		ag "TODO: " > todo.txt
@@ -68,4 +68,4 @@ gum style \
 # TODO: and another mode that just makes the final list (i.e. the way the todo alias works now).
 # TODO: allow this to be configured to .todo 
 # TODO: find a way to allow numeric selection rather than forcing use of arrow keys
-
+# TODO: create a dated archive, like append the old one to archive.txt, delete duplicates and track dates, I think this will give the last date when each task was found i.e. approx when it was completed.
