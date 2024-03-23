@@ -45,7 +45,7 @@ Install gum (`brew install gum`), then clone this repo, and add the folder to yo
 
 Clone this repo:
 ```bash 
-brew install ag gum 
+brew install rg gum # the script will try to install these if you don't have them
 git clone https://github.com/ArthurHowardMorris/wtfd.git 
 export PATH="$HOME/.oh-my-zsh/custom/custom_configs.zsh:$PATH"
 ```
