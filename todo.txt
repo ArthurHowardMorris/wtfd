@@ -1,3 +1,7 @@
+example_the_first.md:4:<!-- TODO: include this -->
+example_the_first.md:16:<!-- TODO: explain what this means -->
+example_the_first.md:18:<!-- TODO: explain what this means  -->
+example_the_first.md:26:alias wtfd='ag "TODO: ">todo.txt;bat todo.txt'
 README.md:9:Tasks are created by writing `TODO: ` anywhere within plain text files in a
 README.md:16:# TODO: convert to a faster file format 
 README.md:21:line numbers, and the text of the lines, where `TODO: ` is found.
@@ -12,7 +16,3 @@ wtfd:68:# TODO: and another mode that just makes the final list (i.e. the way th
 wtfd:69:# TODO: allow this to be configured to .todo 
 wtfd:70:# TODO: find a way to allow numeric selection rather than forcing use of arrow keys
 wtfd:71:# TODO: create a dated archive, like append the old one to archive.txt, delete duplicates and track dates, I think this will give the last date when each task was found i.e. approx when it was completed.
-example_the_first.md:4:<!-- TODO: include this -->
-example_the_first.md:16:<!-- TODO: explain what this means -->
-example_the_first.md:18:<!-- TODO: explain what this means  -->
-example_the_first.md:26:alias wtfd='ag "TODO: ">todo.txt;bat todo.txt'
