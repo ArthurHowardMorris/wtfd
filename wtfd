@@ -46,7 +46,7 @@ do
 	OPENTHIS+=$(echo "$RESULT" | cut -d ":" -f 1)
 	OPENHERE=$(echo "$RESULT" | cut -d ":" -f 2)
 	if [ "$EDITOR" = "nvim" ] || [ "$EDITOR" = "vim" ]; then 
-		$EDITOR $OPENTHIS +$OPENHERE 
+		$EDITOR "$OPENTHIS" +$OPENHERE 
 	elif [ "$EDITOR" = "code" ]; then 
 		$EDITOR $(OPENTHIS):$OPENHERE 
 	else 
