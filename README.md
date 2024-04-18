@@ -6,7 +6,7 @@ management system for folks that work in plain text environments.
 
 ## The system:
 
-Tasks are created by writing `TODO: ` anywhere within plain text files in a
+Tasks are created by writing `TODO: ` or `- [ ]` anywhere within plain text files in a
 project. It is convenient,  but not required, to put these in comments. For
 example:
 
