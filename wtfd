@@ -18,13 +18,16 @@ install_depends
 gather_todos () {
 	if command -v rg &> /dev/null 
 	then 
-		rg -n "TODO: " > todo.txt 
+		# rg -n "TODO: " > todo.txt 
+		rg -n '(TODO: |- \[ \])' > todo.txt
 	elif command -v rg &> /dev/null
 	then 
-		ag "TODO: " > todo.txt
+		# ag "TODO: " > todo.txt
+		ag -n '(TODO: |- \[ \])' > todo.txt
 	elif command -v grep &> /dev/null 
 	then 
-		grep -nr "TODO: " . > todo.txt
+		# grep -nr "TODO: " . > todo.txt
+		grep -Enr '(TODO: |- \[ \])' . > todo.txt
 	else
 		install_depends
 	fi
