@@ -19,7 +19,7 @@ gather_todos () {
 	if command -v rg &> /dev/null 
 	then 
 		# rg -n "TODO: " > todo.txt 
-		rg -n '(TODO: |- \[ \])' > todo.txt
+		rg -n '(TODO: |- \[ \])' --type-not html > todo.txt
 	elif command -v rg &> /dev/null
 	then 
 		# ag "TODO: " > todo.txt
