@@ -1,74 +1,68 @@
-#!/bin/bash 
+#!/bin/bash
 # search for the TODO tag recursively in the current directory
-install_depends () {
-	if ! command -v gum &> /dev/null 
-	then 
-		echo "wtfd uses gum installing" # TODO: give choice 
-		brew install gum 
-	fi 
-	
-	if ! command -v gum &>/dev/null && ! command -v rg &>/dev/null && ! command -v grep &>/dev/null 
-	then
-		echo "need a grep equivalent installing" # TODO: give choice 
-		brew install rg 
-	fi
+install_depends() {
+  if ! command -v gum &>/dev/null; then
+    echo "wtfd uses gum installing" # TODO: give choice
+    brew install gum
+  fi
+
+  if ! command -v gum &>/dev/null && ! command -v rg &>/dev/null && ! command -v grep &>/dev/null; then
+    echo "need a grep equivalent installing" # TODO: give choice
+    brew install rg
+  fi
 }
 install_depends
 
-gather_todos () {
-	if command -v rg &> /dev/null 
-	then 
-		# rg -n "TODO: " > todo.txt 
-		rg -n '(TODO: |- \[ \])' --type-not html > todo.txt
-	elif command -v rg &> /dev/null
-	then 
-		# ag "TODO: " > todo.txt
-		ag -n '(TODO: |- \[ \])' > todo.txt
-	elif command -v grep &> /dev/null 
-	then 
-		# grep -nr "TODO: " . > todo.txt
-		grep -Enr '(TODO: |- \[ \])' . > todo.txt
-	else
-		install_depends
-	fi
-	TASKS=$(cat todo.txt | wc -l)
+gather_todos() {
+  if command -v rg &>/dev/null; then
+    # rg -n "TODO: " > todo.txt
+    rg --glob '!**/*scratch*/**' --glob '!todo.txt' -n '(TODO: |- \[ \])' --type-not html >todo.txt
+  elif command -v rg &>/dev/null; then
+    # ag "TODO: " > todo.txt
+    ag -n '(TODO: |- \[ \])' >todo.txt
+  elif command -v grep &>/dev/null; then
+    # grep -nr "TODO: " . > todo.txt
+    grep -Enr '(TODO: |- \[ \])' . >todo.txt
+  else
+    install_depends
+  fi
+  TASKS=$(cat todo.txt | wc -l)
 }
 gather_todos
 
-while [ $TASKS -gt 0 ]
-do 
-	RESULT=$(cat todo.txt | gum filter) 
-	if [ $? = 130 ]; then 
-		gum style \
-		--foreground 212 --border-foreground 212 --border double \
-		--align center --width 50 --margin "1 2" --padding "2 4" \
-		"todo.txt saved with" "$TASKS tasks open"
-		exit 1
-	fi
-	OPENTHIS="$(pwd)/" 
-	OPENTHIS+=$(echo "$RESULT" | cut -d ":" -f 1)
-	OPENHERE=$(echo "$RESULT" | cut -d ":" -f 2)
-	if [ "$EDITOR" = "nvim" ] || [ "$EDITOR" = "vim" ]; then 
-		$EDITOR "$OPENTHIS" +$OPENHERE 
-	elif [ "$EDITOR" = "code" ]; then 
-		$EDITOR $(OPENTHIS):$OPENHERE 
-	else 
-		echo "editor not supported"
-		bat todo.txt 
-		exit 1
-	fi
-	gather_todos
-done 
+while [ $TASKS -gt 0 ]; do
+  RESULT=$(cat todo.txt | gum filter)
+  if [ $? = 130 ]; then
+    gum style \
+      --foreground 212 --border-foreground 212 --border double \
+      --align center --width 50 --margin "1 2" --padding "2 4" \
+      "todo.txt saved with" "$TASKS tasks open"
+    exit 1
+  fi
+  OPENTHIS="$(pwd)/"
+  OPENTHIS+=$(echo "$RESULT" | cut -d ":" -f 1)
+  OPENHERE=$(echo "$RESULT" | cut -d ":" -f 2)
+  if [ "$EDITOR" = "nvim" ] || [ "$EDITOR" = "vim" ]; then
+    $EDITOR "$OPENTHIS" +$OPENHERE
+  elif [ "$EDITOR" = "code" ]; then
+    $EDITOR $(OPENTHIS):$OPENHERE
+  else
+    echo "editor not supported"
+    bat todo.txt
+    exit 1
+  fi
+  gather_todos
+done
 
-# exit message 
+# exit message
 gum style \
-		--foreground 212 --border-foreground 212 --border double \
-		--align center --width 50 --margin "1 2" --padding "2 4" \
-		"TASKS COMPLETED" 
+  --foreground 212 --border-foreground 212 --border double \
+  --align center --width 50 --margin "1 2" --padding "2 4" \
+  "TASKS COMPLETED"
 
-# NB: popping these for now 
+# NB: popping these for now
 # TODO: develop one mode that brings you back to the selector when you're done working in the editor
 # TODO: and another mode that just makes the final list (i.e. the way the todo alias works now).
-# TODO: allow this to be configured to .todo 
+# TODO: allow this to be configured to .todo
 # TODO: find a way to allow numeric selection rather than forcing use of arrow keys
 # TODO: create a dated archive, like append the old one to archive.txt, delete duplicates and track dates, I think this will give the last date when each task was found i.e. approx when it was completed.

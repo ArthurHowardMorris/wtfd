@@ -1,21 +1,21 @@
-./example_the_first.md:4:<!-- TODO: include this -->
-./example_the_first.md:16:<!-- TODO: explain what this means -->
-./example_the_first.md:18:<!-- TODO: explain what this means  -->
-./example_the_first.md:26:alias wtfd='ag "TODO: ">todo.txt;bat todo.txt'
-./wtfd:6:		echo "wtfd uses gum installing" # TODO: give choice 
-./wtfd:12:		echo "need a grep equivalent installing" # TODO: give choice 
-./wtfd:21:		# rg -n "TODO: " > todo.txt 
-./wtfd:22:		rg -n '(TODO: |- \[ \])' --type-not html > todo.txt
-./wtfd:25:		# ag "TODO: " > todo.txt
-./wtfd:26:		ag -n '(TODO: |- \[ \])' > todo.txt
-./wtfd:29:		# grep -nr "TODO: " . > todo.txt
-./wtfd:30:		grep -Enr '(TODO: |- \[ \])' . > todo.txt
-./wtfd:70:# TODO: develop one mode that brings you back to the selector when you're done working in the editor
-./wtfd:71:# TODO: and another mode that just makes the final list (i.e. the way the todo alias works now).
-./wtfd:72:# TODO: allow this to be configured to .todo 
-./wtfd:73:# TODO: find a way to allow numeric selection rather than forcing use of arrow keys
-./wtfd:74:# TODO: create a dated archive, like append the old one to archive.txt, delete duplicates and track dates, I think this will give the last date when each task was found i.e. approx when it was completed.
-./README.md:9:Tasks are created by writing `TODO: ` or `- [ ]` anywhere within plain text files in a
-./README.md:16:# TODO: convert to a faster file format 
-./README.md:21:line numbers, and the text of the lines, where `TODO: ` is found.
-./README.md:38:alias wtfd='ag "TODO: ">todo.txt;bat todo.txt'
+example_the_first.md:4:<!-- TODO: include this -->
+example_the_first.md:16:<!-- TODO: explain what this means -->
+example_the_first.md:18:<!-- TODO: explain what this means  -->
+example_the_first.md:26:alias wtfd='ag "TODO: ">todo.txt;bat todo.txt'
+wtfd:6:		echo "wtfd uses gum installing" # TODO: give choice 
+wtfd:12:		echo "need a grep equivalent installing" # TODO: give choice 
+wtfd:21:		# rg -n "TODO: " > todo.txt 
+wtfd:22:		rg -n '(TODO: |- \[ \])' --type-not html > todo.txt
+wtfd:25:		# ag "TODO: " > todo.txt
+wtfd:26:		ag -n '(TODO: |- \[ \])' > todo.txt
+wtfd:29:		# grep -nr "TODO: " . > todo.txt
+wtfd:30:		grep -Enr '(TODO: |- \[ \])' . > todo.txt
+wtfd:70:# TODO: develop one mode that brings you back to the selector when you're done working in the editor
+wtfd:71:# TODO: and another mode that just makes the final list (i.e. the way the todo alias works now).
+wtfd:72:# TODO: allow this to be configured to .todo 
+wtfd:73:# TODO: find a way to allow numeric selection rather than forcing use of arrow keys
+wtfd:74:# TODO: create a dated archive, like append the old one to archive.txt, delete duplicates and track dates, I think this will give the last date when each task was found i.e. approx when it was completed.
+README.md:9:Tasks are created by writing `TODO: ` or `- [ ]` anywhere within plain text files in a
+README.md:16:# TODO: convert to a faster file format 
+README.md:21:line numbers, and the text of the lines, where `TODO: ` is found.
+README.md:38:alias wtfd='ag "TODO: ">todo.txt;bat todo.txt'
