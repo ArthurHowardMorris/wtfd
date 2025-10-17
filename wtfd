@@ -13,7 +13,6 @@ install_depends () {
 		brew install rg 
 	fi
 }
-install_depends
 
 gather_todos () {
 	if command -v rg &> /dev/null 
@@ -33,17 +32,22 @@ gather_todos () {
 	fi
 	TASKS=$(cat todo.txt | wc -l)
 }
+
+# set up:
+install_depends
 gather_todos
 
+# launch the workflow
 while [ $TASKS -gt 0 ]
 do 
 	RESULT=$(cat todo.txt | gum filter) 
+	# escape key exits gracefully with summary
 	if [ $? = 130 ]; then 
 		gum style \
 		--foreground 212 --border-foreground 212 --border double \
 		--align center --width 50 --margin "1 2" --padding "2 4" \
 		"todo.txt saved with" "$TASKS tasks open"
-		exit 1
+		exit 0 
 	fi
 	OPENTHIS="$(pwd)/" 
 	OPENTHIS+=$(echo "$RESULT" | cut -d ":" -f 1)
